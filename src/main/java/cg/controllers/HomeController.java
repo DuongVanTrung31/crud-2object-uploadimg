@@ -110,9 +110,13 @@ public class HomeController {
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
+            if(product.getImage().getSize() == 0){
+                product.setImage(productService.getProduct(product.getId()).getImage());
+            }
             String message = productService.saveProduct(product);
             ArrayList<Product> products = productService.getAllProduct();
             modelAndView.addObject("products", products);
+            modelAndView.addObject("message",message);
             return modelAndView;
         }
     }
